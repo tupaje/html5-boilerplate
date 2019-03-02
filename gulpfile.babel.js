@@ -78,7 +78,6 @@ gulp.task('clean', (done) => {
 gulp.task('copy', [
   'copy:.htaccess',
   'copy:index.html',
-  'copy:jquery',
   'copy:license',
   'copy:main.css',
   'copy:misc',
@@ -92,25 +91,12 @@ gulp.task('copy:.htaccess', () =>
 );
 
 gulp.task('copy:index.html', () => {
-  const hash = ssri.fromData(
-    fs.readFileSync('node_modules/jquery/dist/jquery.min.js'),
-    {algorithms: ['sha256']}
-  );
-  let version = pkg.devDependencies.jquery;
   let modernizrVersion = pkg.devDependencies.modernizr;
 
   gulp.src(`${dirs.src}/index.html`)
-    .pipe(plugins().replace(/{{JQUERY_VERSION}}/g, version))
     .pipe(plugins().replace(/{{MODERNIZR_VERSION}}/g, modernizrVersion))
-    .pipe(plugins().replace(/{{JQUERY_SRI_HASH}}/g, hash.toString()))
     .pipe(gulp.dest(dirs.dist));
 });
-
-gulp.task('copy:jquery', () =>
-  gulp.src(['node_modules/jquery/dist/jquery.min.js'])
-    .pipe(plugins().rename(`jquery-${pkg.devDependencies.jquery}.min.js`))
-    .pipe(gulp.dest(`${dirs.dist}/js/vendor`))
-);
 
 gulp.task('copy:license', () =>
   gulp.src('LICENSE.txt')
@@ -154,7 +140,9 @@ gulp.task('copy:normalize', () =>
 );
 
 gulp.task('modernizr', (done) =>{
-
+  if(!fs.existsSync(`${dirs.dist}/js/vendor`)) {
+            fs.mkdirSync(`${dirs.dist}/js/vendor`);
+          }
   modernizr.build(modernizrConfig, (code) => {
     fs.writeFile(`${dirs.dist}/js/vendor/modernizr-${pkg.devDependencies.modernizr}.min.js`, code, done);
   });

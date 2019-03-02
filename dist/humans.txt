@@ -3,13 +3,18 @@
 
 # TEAM
 
-    <name> -- <role> -- <twitter>
+    Software engineer: Jeffry Tupa
+	Contact: hello [at] tupadesigns.com
+	Twitter: @tupaje
+	From: Houston, Texas, USA 
 
 # THANKS
 
-    <name>
+    Jeffry Tupa
 
 # TECHNOLOGY COLOPHON
 
-    CSS3, HTML5
-    Apache Server Configs, jQuery, Modernizr, Normalize.css
+Last update: 2019-03-02 
+Standards: HTML5, CSS3
+Components: Apache Server Configs, Modernizr, Normalize.css
+Software: Sublime Text 3, IntelliJ IDEA
